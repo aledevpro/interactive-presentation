@@ -28,7 +28,7 @@ func main() {
 
 
 	m, err := migrate.New(
-		"file://db/migration",
+		config.MigrationURL,
 		config.DBSource, 
 	)
 	if err != nil {
