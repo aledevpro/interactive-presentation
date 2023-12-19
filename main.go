@@ -16,9 +16,11 @@ import (
 
 
 func main() {
-	config, err := util.LoadConfig(".")
-	if err != nil {
-		log.Fatalf("%s cannot load config", err.Error())
+	config:=util.Config{
+		Environment:  "production",
+		DBDriver:     "postgres",
+		DBSource:     "postgresql://root:XM5IPpSNjRggVpS22Tp2@interactive-presentations.chihgxkzxezm.eu-north-1.rds.amazonaws.com:5432/interactive_presentations",
+		MigrationURL: "file://db/migration",
 	}
 	conn, err := sql.Open(config.DBDriver,  config.DBSource)
 	if err != nil {
