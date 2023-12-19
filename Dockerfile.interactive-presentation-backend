@@ -1,0 +1,20 @@
+FROM golang:1.21.0 AS builder
+
+WORKDIR /app
+
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY . .
+
+RUN CGO_ENABLED=0 GOOS=linux go build -o /interactive-presentation-backend
+
+FROM alpine:latest
+RUN apk --no-cache add ca-certificates
+WORKDIR /
+COPY --from=builder /interactive-presentation-backend /interactive-presentation-backend
+COPY db/migration /db/migration
+
+EXPOSE 8080
+
+CMD ["/interactive-presentation-backend"]
