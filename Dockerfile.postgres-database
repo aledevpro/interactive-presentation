@@ -1,0 +1,19 @@
+FROM postgres:13
+
+# Set environment variables
+ENV POSTGRES_USER=${POSTGRES_USER} \
+    POSTGRES_PASSWORD=${POSTGRES_PASSWORD} \
+    POSTGRES_DB=${POSTGRES_DB}
+
+# Expose the PostgreSQL port
+EXPOSE 5432
+
+# Run the rest of the commands as the ``postgres`` user
+USER postgres
+
+# Since there is no schema.sql file, we are not copying it into the image
+# Add volume to allow database persistence
+VOLUME ["/var/lib/postgresql/data"]
+
+# Set the default command for the container to postgres
+CMD ["postgres"]

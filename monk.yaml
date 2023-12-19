@@ -1,0 +1,97 @@
+namespace: interactive-presentation
+
+go-web-application:
+  defines: runnable
+  metadata:
+    name: go-web-application
+    description: The main Go web application handling API requests and server logic.
+    icon: https://emojiapi.dev/api/v1/robot.svg
+  containers:
+    go-web-application:
+      image: env-4349.registry.local/go-web-application:main-3834b1f
+      build: .
+      dockerfile: Dockerfile.go-web-application
+  services: {}
+  connections:
+    database-connection:
+      target: interactive-presentation/postgres-database
+      service: postgres-default
+      optional: true
+      description: Connection to the PostgreSQL database service.
+  variables:
+    environment:
+      env: ENVIRONMENT
+      type: string
+      value: production
+      description: >-
+        The environment the application is running in, e.g., development,
+        staging, production.
+    db-driver:
+      env: DB_DRIVER
+      type: string
+      value: postgres
+      description: The database driver to use for database connections.
+    migration-url:
+      env: MIGRATION_URL
+      type: string
+      value: file://db/migration
+      description: The URL to the database migrations directory.
+    db-source:
+      env: DB_SOURCE
+      type: string
+      value: >-
+        postgresql://postgres:password@postgres-database:5432/interactive_presentations?sslmode=disable
+      description: >-
+        The database source information including credentials, used in
+        production.
+    db-source-dev:
+      env: DB_SOURCE_DEV
+      type: string
+      value: >-
+        postgresql://postgres:root@localhost:5432/interactive_presentations?sslmode=disable
+      description: The database source information for the development environment.
+
+postgres-database:
+  defines: runnable
+  metadata:
+    name: postgres-database
+    description: >-
+      PostgreSQL database service with schema migrations and queries required by
+      the Go application.
+    icon: https://emojiapi.dev/api/v1/robot.svg
+  containers:
+    postgres-database:
+      image: env-4349.registry.local/postgres-database:main-3834b1f
+      build: .
+      dockerfile: Dockerfile.postgres-database
+  services:
+    postgres-default:
+      description: Default PostgreSQL port for database connections.
+      container: postgres-database
+      port: 5432
+      host-port: 5432
+      publish: false
+      protocol: tcp
+  connections: {}
+  variables:
+    postgres-user:
+      env: POSTGRES_USER
+      type: string
+      value: postgres
+      description: Username for PostgreSQL authentication.
+    postgres-password:
+      env: POSTGRES_PASSWORD
+      type: string
+      value: password
+      description: Password for PostgreSQL authentication.
+    postgres-db:
+      env: POSTGRES_DB
+      type: string
+      value: interactive_presentations
+      description: Database name to be created on image startup.
+
+stack:
+  defines: group
+  members:
+    - interactive-presentation/go-web-application
+    - interactive-presentation/postgres-database
