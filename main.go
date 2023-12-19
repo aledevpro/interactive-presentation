@@ -9,9 +9,9 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/lib/pq"
 
-	"github.com/aleale2121/interactive-presentation/api"
-	db "github.com/aleale2121/interactive-presentation/db/sqlc"
-	"github.com/aleale2121/interactive-presentation/util"
+	"github.com/aledevpro/interactive-presentation/api"
+	db "github.com/aledevpro/interactive-presentation/db/sqlc"
+	"github.com/aledevpro/interactive-presentation/util"
 )
 
 

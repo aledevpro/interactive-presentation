@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	db "github.com/aleale2121/interactive-presentation/db/sqlc"
-	"github.com/aleale2121/interactive-presentation/models"
+	db "github.com/aledevpro/interactive-presentation/db/sqlc"
+	"github.com/aledevpro/interactive-presentation/models"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )

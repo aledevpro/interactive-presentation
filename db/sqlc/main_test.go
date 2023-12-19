@@ -7,7 +7,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/aleale2121/interactive-presentation/util"
+	"github.com/aledevpro/interactive-presentation/util"
 	"github.com/google/uuid"
 	_ "github.com/lib/pq"
 )

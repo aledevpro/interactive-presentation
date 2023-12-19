@@ -3,7 +3,7 @@ package api
 import (
 	"net/http"
 
-	db "github.com/aleale2121/interactive-presentation/db/sqlc"
+	db "github.com/aledevpro/interactive-presentation/db/sqlc"
 	"github.com/gin-gonic/gin"
 )
 

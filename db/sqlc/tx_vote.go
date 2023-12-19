@@ -3,7 +3,7 @@ package db
 import (
 	"context"
 
-	"github.com/aleale2121/interactive-presentation/util"
+	"github.com/aledevpro/interactive-presentation/util"
 	"github.com/google/uuid"
 )
 
