@@ -1,0 +1,27 @@
+FROM golang:1.21 AS builder
+
+WORKDIR /app
+
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY . .
+
+RUN CGO_ENABLED=0 GOOS=linux go build -o /go-web-application
+
+FROM alpine:latest
+
+WORKDIR /
+
+COPY --from=builder /go-web-application /go-web-application
+COPY app.env /app.env
+
+EXPOSE 8080
+
+ENV ENVIRONMENT=production \
+    DB_DRIVER=postgres \
+    MIGRATION_URL=file://db/migration \
+    DB_SOURCE=postgresql://user:password@localhost:5432/dbname?sslmode=disable \
+    DB_SOURCE_DEV=postgresql://user:password@localhost:5432/dbname?sslmode=disable
+
+CMD ["/go-web-application"]
